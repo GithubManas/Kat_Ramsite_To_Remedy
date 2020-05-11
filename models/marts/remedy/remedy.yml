@@ -1,0 +1,217 @@
+version: 2
+
+models:
+
+        - name: physical_location_site
+          columns:
+          
+            - name: Site ID
+              description: Site ID or  Mobile terminals ID 
+
+            - name: Mobile Terminal
+              description:   Mobile terminals  
+                
+            - name: Site Status
+              description: Site  or  Mobile terminals status
+                
+            - name: Site Name
+              description: Site name in Danish
+
+            - name: English Name
+              description: Site  Name in English
+            
+            - name: Cluster
+              description: Site  under which Cluster
+                
+            - name: Site Priority
+              description:  define different impact severity depending on the type of site
+
+            - name: RNC ID
+              description: Radio Network Controller ID
+            
+            - name: BSC ID
+              description: Base Station Controller ID
+              
+            - name: EPC ID
+              description:  Evolved Packet Core ID
+
+            - name: Address
+              description: Site Address
+            
+            - name: PostalCode
+              description: Site Postal Code or Pin Code
+
+            - name: City
+              description: Site Under which City
+            
+            - name: Municipal
+              description: Site Under which Municipal
+              
+            - name: Region
+              description:  Site Under which Region
+
+            - name: Easting UTM32-ED50
+              description: Location details Easting UTM32
+              
+            - name: Norting UTM32-ED50
+              description:  Location details Norting UTM32
+
+            - name: LONGITUDE-WGS84
+              description:  Location details LONGITUDE
+            
+            - name: LATITUDE-WGS84
+              description: Location details LATITUDE
+
+        - name: site_type
+          columns:
+
+            - name: Site ID
+              description: Primary key of the table which is Unique 
+                
+            - name: Site Type
+              description: types of telecommunication Site
+  
+            - name: 2G
+              description: weather Site support 2g or not
+
+            - name: 3G
+              description: weather Site support 3g or not
+
+            - name: 4G
+              description: weather Site support 4g or not
+
+            - name: 5G
+              description: weather Site support 5g or not
+            
+        - name: mobile_cell
+          columns:
+
+            - name: Cell ID
+              description: unique number Cell ID
+              
+            - name: SiteID
+              description: Sell ID present under which site ( site iD)
+  
+            - name: Cell Name
+              description: Cell Name
+  
+            - name: Cell Status
+              description: Cell Status (OnAir/Not OnAir/Disabled/Deactivated)
+
+            - name: Cell Type
+              description: Cell Type 2G,3G,4G,5G
+
+            - name: System Type
+              description: cell system GSM/LITE/UMTS
+
+            - name: Traffic Area
+              description: Traffic Area
+
+            - name: Cell_Position
+              description: Cell_Position
+
+            - name: Azimuth
+              description: Azimuth
+
+            - name: Sector
+              description: Sector
+              
+            - name: Cell Radius
+              description: Cell Radius or Range
+
+            - name: NodeName
+              description: Node Name
+
+            - name: eNodeB ID
+              description:  identifying an eNB
+
+            - name: gNodeB ID
+              description:  Global eNB ID
+
+            - name: BSC_RNC
+              description:  BSC_RNC
+
+
+        - name: mobile_circuit
+          columns:
+
+            - name: CircuitID
+              description: unique CircuitID
+                
+            - name: Terminal 1_MobileTerminal
+              description:  mobile terminal
+  
+            - name: Terminal 2_RootTerminal
+              description: end-point of the Mobile Terminal (Root Terminal)
+  
+            - name: Circuit Status
+              description: circuit status Active/Damaged
+
+            - name: Logical Group Circuit
+              description:  Relevant transmission group elements
+
+            - name: Group Position
+              description: circuit group position (Grp St Pos.)
+
+
+        - name: circuit_group
+          columns:
+          
+            - name: Circuit Group ID
+              description: unique Circuit Group ID
+                
+            - name: Group Circuit T1
+              description:  Group Circuit T1 , start mobile terminal 
+  
+            - name: Group Circuit T2
+              description: Group Circuit T2 , End mobile terminal 
+  
+            - name: Group Type
+              description: Group Type
+
+
+        - name: tx_terminal
+          columns:
+
+            - name: TxID
+              description: Unique identifier for a terminal. Primary key of the terminal.
+                
+            - name: NE Type
+              description:  Type of terminal.
+  
+            - name: NE Name
+              description: Terminal Name.
+  
+            - name: Address
+              description: Address of the terminal.
+              
+            - name: PostalCode
+              description: Postal code of the terminal.
+
+            - name: City
+              description: City to which the terminal belongs.
+  
+            - name: Geocode
+              description: Geocode of the terminal.
+ 
+ 
+        - name: share_cable
+          columns:
+          
+            - name: CableID
+              description: unique Cable ID
+                
+            - name: Terminal 1_RTN
+              description:  Terminal 1 RTN
+  
+            - name: Terminal 2_Lmile T
+              description: Terminal 2 Lmile T
+  
+            - name: Lmile Cable Junction
+              description: Lmile Cable Junction
+              
+            - name: Lmile Junction Terminal
+              description: Lmile Junction Terminal
+
+            - name: Cable Status
+              description: Cable Status

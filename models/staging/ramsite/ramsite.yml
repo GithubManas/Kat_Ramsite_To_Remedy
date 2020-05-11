@@ -1,0 +1,278 @@
+version: 2
+
+sources:
+
+  - name: ramsite
+    description: Data Reception Area where the raw data from source is stored intact.
+    database: DDMP_DRA
+    schema: ramsite
+
+    tables:
+      - name: site
+        columns:
+          - name: "[Site Id]"
+            description: Unique identifier of a Site in RamSite. Primary key of the table.
+            tests:
+              - unique
+              - not_null
+
+          - name: Site Name
+            description: Name of the site in danish.
+
+          - name: English Name
+            description: English translation of the site name.
+
+          - name: Cluster
+            description: Cluster to which the site belongs to.
+
+          - name: Priority
+            description: Business priority of the site e.g. Priority 2, VIP cell site.
+
+          - name: RNC ID
+            description: RNC ID of the site.
+
+          - name: BSC ID
+            description: BSC ID of the site.
+
+          - name: EPC ID
+            description: EPC ID of the site.
+
+          - name: Site Status
+            description: Status of the site i.e., On Air, Ready, Planned.
+
+          - name: Address 1
+            description: Street Name/Address line 1 of the site .
+
+          - name: House No
+            description: House number of the site.
+            
+          - name: PostCode
+            description: Postal code of the site.
+
+          - name: City
+            description: City to which the site belongs to.
+
+          - name: Municipality
+            description: Municipality to which the site belongs.
+
+          - name: County
+            description: County/Region to which the site belongs to.  
+
+          - name: Country
+            description: Country of the site.
+
+          - name: Easting UTM32-ED50
+            description: Easting coordinates of the site.
+
+          - name: Northing UTM32-ED50
+            description: Northing coordinates of the site.
+
+          - name: Longitude-WGS84
+            description: Longitude of the site in WGS84 format.
+
+          - name: Latitude-WGS84
+            description: Latitude of the site in WGS84 format.
+
+          - name: Site Type
+            description: Type of site i.e, MACRO or IBS etc.
+
+          - name: Structure Type
+            description: Structure type of the site i.e., Bygning, Indendørssystem etc. 
+
+          - name: Transmission Name
+            description: Name of the transmission.
+
+          - name: CircuitIds
+            description: Circuits available on the site with a comma separated values along with letter indicating the technology e.g., HJ910240,HN173010,MD150031L,MD150031U.         
+
+      - name: cell
+        columns:
+          - name: "[Cell Id]"
+            description: Unique identifier for a cell in site. Primary key of the table.
+            tests:
+              - unique
+              - not_null
+
+          - name: Site Id
+            description: Reference to the site to which the cell belongs. Foreign Key of ramsite.Site.
+
+          - name: Name
+            description: Name of the cell.
+
+          - name: Status
+            description: Status of the cell i.e., OnAir, Disabled, Not On Air.
+
+          - name: System Type
+            description: System type of the cell i.e., LTE800, UMTS2100, GSM900 etc.
+          
+          - name: Traffic Area
+            description: Traffic area to which the cell belongs.
+
+          - name: Position
+            description: Position of the cell.
+
+          - name: Azimuth
+            description: Degree of rotation to which cell is installed i.e., 180, 360 etc.
+
+          - name: Sector
+            description: Name of the sector to which cell belongs.
+
+          - name: Center Name
+            description: Name of the center to which cell belongs.
+
+          - name: Radius
+            description: Radius of the cell.
+
+          - name: NodeName
+            description: Node name of the cell.
+
+          - name: eNodeB ID
+            description: eNodeB ID of the cell.
+
+          - name: gNodeB ID
+            description: gNodeB ID of the cell.
+
+          - name: BSC_RNC
+            description: BSC RNC of the cell.
+
+models:
+      - name: stg_ramsite_site
+        columns:
+          - name: "[Site Id]"
+            description: Unique identifier of a Site in RamSite. Primary key of the table.
+            tests:
+                  - unique
+                  - not_null
+
+          - name: Site Name
+            description: Name of the site in danish.
+
+          - name: English Name
+            description: English translation of the site name.
+
+          - name: Cluster
+            description: Cluster to which the site belongs to.
+
+          - name: Priority
+            description: Business priority of the site e.g. Priority 2, VIP cell site.
+
+          - name: RNC ID
+            description: RNC ID of the site.
+
+          - name: BSC ID
+            description: BSC ID of the site.
+
+          - name: EPC ID
+            description: EPC ID of the site.
+
+          - name: "[Site Status]"
+            description: Status of the site i.e., On Air, Ready, Planned.
+            tests:
+                  - accepted_values:
+                      values: ['Ready','On Air']
+
+          - name: Address 1
+            description: Street Name/Address line 1 of the site .
+
+          - name: House No
+            description: House number of the site.
+            
+          - name: PostCode
+            description: Postal code of the site.
+
+          - name: City
+            description: City to which the site belongs to.
+
+          - name: Municipality
+            description: Municipality to which the site belongs.
+
+          - name: County
+            description: County/Region to which the site belongs to.  
+
+          - name: Country
+            description: Country of the site.
+
+          - name: Easting UTM32-ED50
+            description: Easting coordinates of the site.
+
+          - name: Northing UTM32-ED50
+            description: Northing coordinates of the site.
+
+          - name: Longitude-WGS84
+            description: Longitude of the site in WGS84 format.
+
+          - name: Latitude-WGS84
+            description: Latitude of the site in WGS84 format.
+
+          - name: Site Type
+            description: Type of site i.e, MACRO or IBS etc.
+
+          - name: Structure Type
+            description: Structure type of the site i.e., Bygning, Indendørssystem etc. 
+
+          - name: Transmission Name
+            description: Name of the transmission.
+
+          - name: CircuitIds
+            description: Circuits available on the site with a comma separated values along with letter indicating the technology e.g., HJ910240,HN173010,MD150031L,MD150031U. 
+            
+          - name: LoadDateTime
+            description: Load Date and time of the data indicating the freshness of data.
+            tests:
+              - not_null    
+      
+      - name: stg_ramsite_cell
+        columns:
+      
+          - name: "[Cell Id]"
+            description: Unique identifier for a cell in site. Primary key of the table.
+            tests:
+              - unique
+              - not_null
+
+          - name: Site Id
+            description: Reference to the site to which the cell belongs. Foreign Key of ramsite.Site.
+
+          - name: Name
+            description: Name of the cell.
+
+          - name: Status
+            description: Status of the cell i.e., OnAir, Disabled, Not On Air.
+
+          - name: System Type
+            description: System type of the cell i.e., LTE800, UMTS2100, GSM900 etc.
+          
+          - name: Traffic Area
+            description: Traffic area to which the cell belongs.
+
+          - name: Position
+            description: Position of the cell.
+
+          - name: Azimuth
+            description: Degree of rotation to which cell is installed i.e., 180, 360 etc.
+
+          - name: Sector
+            description: Name of the sector to which cell belongs.
+
+          - name: Center Name
+            description: Name of the center to which cell belongs.
+
+          - name: Radius
+            description: Radius of the cell.
+
+          - name: NodeName
+            description: Node name of the cell.
+
+          - name: eNodeB ID
+            description: eNodeB ID of the cell.
+
+          - name: gNodeB ID
+            description: gNodeB ID of the cell.
+
+          - name: BSC_RNC
+            description: BSC RNC of the cell.
+
+          - name: LoadDateTime
+            description: Load Date and time of the data indicating the freshness of data.
+            tests:
+              - not_null

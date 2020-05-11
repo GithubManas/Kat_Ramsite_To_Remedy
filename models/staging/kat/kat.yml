@@ -1,0 +1,278 @@
+version: 2
+
+sources:
+
+  - name: kat
+    description: Data Reception Area where the raw data from source is stored intact.
+    database: DDMP_DRA
+    schema: kat
+
+    tables:
+      - name: MobileCircuit
+        columns:
+          - name: CircuitID
+            description: Unique identifier for a Circuit in network. Primary key of the table.
+            tests:
+              - unique
+              - not_null
+          
+          - name: Mobile Terminal
+            description: Mobile terminal to which circuit belongs to.
+
+          - name: Root Terminal
+            description: Root terminal to which circuit belongs to.
+
+          - name: Circuit Status
+            description: Status of the circuit i.e., Active, Damaged etc.
+
+          - name: Damage Mark
+            description: Marker indicating whether the circuit is damaged or not.
+
+          - name: Cable Share Plant
+            description: Transmission path of the circuit. Holds value only if there is a share path. Value is a combination of Lmile Terminal, Mobile Terminal and cable number. FK to kat.circuitsharedplant.
+
+          - name: Last mile Terminal
+            description: Last mile terminal of the circuit.
+
+          - name: Group Circuit
+            description: Group circuit to which the circuit belongs to. Value is combination of Terminal 1 - Terminal 2 Group Circuit Type.
+
+          - name: Group Circuit T1
+            description: Terminal 1 of the group circuit.
+
+          - name: Group Circuit T2
+            description: Terminal 2 of the group circuit.  
+
+          - name: Group Circuit Position
+            description: Group circuit position.
+
+          - name: Group Circuit Type
+            description: Type of the group circuit i.e., 10g, vcs4s etc.
+
+      - name: SharedCablePlant
+        columns:
+            - name: "[Share Cable Id]"
+              description: Unique identifier for a share cable transmission path. Primary key of the table. Value is a combination of Lmile Terminal, Mobile Terminal and cable number.
+              tests:
+                - unique
+                - not_null
+
+            - name: Share Cable Nr
+              description: Cable number of the shared cable plant.
+
+            - name: Last Mile Cable Junction
+              description: Last mile cable junction of the shared cable plant.
+
+            - name: Last Mile Junction Terminal
+              description: Last mile junction terminal of the shared cable plant.
+
+            - name: Mobile Terminal
+              description: Mobile terminal of shared cable plant.
+
+            - name: Root Terminal
+              description: Root terminal of shared cable plant.
+
+            - name: Cable Status
+              description: Cable status i.e., Active, Damaged etc.
+
+            - name: Damage Mark
+              description: Marker indicating if the Cable is damaged or not.
+
+
+      - name: Terminal
+        columns:
+          - name: "[Terminal Id]"
+            description: Unique identifier for a terminal. Can be a Mobile Terminal, Root Terminal, Group Circuit Terminal1, Group Circuit Terminal2. Primary key of the table.
+            tests:
+              - unique
+              - not_null
+            
+          - name: Navn
+            description: Name of the terminal. For mobile terminals, name is a combination of site id and site name which is used for correlating data from ramsite.
+
+          - name: Stednavn
+            description: Terminal1.
+
+          - name: Teknisk
+            description: Terminal2.
+
+          - name: Gade
+            description: Street of the terminal.
+
+          - name: Nr
+            description: House number of the terminal.
+
+          - name: Bogst
+            description: Bogst of the terminal.
+
+          - name: Etage
+            description: Etage of the terminal.
+
+          - name: Lejl
+            description: Lejl of the terminal.
+
+          - name: PostNr
+            description: Post code where the terminal is located.
+
+          - name: By
+            description: City where the terminal is located.
+
+          - name: Geocode
+            description: Geocode of the terminal.
+
+          - name: Dok Central
+            description: Dok central to which the terminal belongs to.
+
+          - name: Share Connection 1
+            description: Share Connection 1 of the terminal.
+
+          - name: Share Connection 2
+            description: Share Connection 2 of the terminal.
+
+          - name: Damage Mark
+            description: Damage marker of the terminal.
+
+models:
+  - name: stg_kat_mobilecircuit
+    columns:
+          - name: CircuitID
+            description: Unique identifier for a Circuit in network. Primary key of the table.
+            tests:
+                  - unique
+                  - not_null
+          
+          - name: Mobile Terminal
+            description: Mobile terminal to which circuit belongs to.
+
+          - name: Root Terminal
+            description: Root terminal to which circuit belongs to.
+
+          - name: "[Circuit Status]"
+            description: Status of the circuit i.e., Active, Damaged etc.
+            tests:
+                  - accepted_values:
+                      values: ['Active','Damaged']
+
+          - name: Damage Mark
+            description: Marker indicating whether the circuit is damaged or not.
+
+          - name: Cable Share Plant
+            description: Transmission path of the circuit. Holds value only if there is a share path. Value is a combination of Lmile Terminal, Mobile Terminal and cable number. FK to kat.circuitsharedplant.
+
+          - name: Last mile Terminal
+            description: Last mile terminal of the circuit.
+
+          - name: Group Circuit
+            description: Group circuit to which the circuit belongs to. Value is combination of Terminal 1 - Terminal 2 Group Circuit Type.
+
+          - name: Group Circuit T1
+            description: Terminal 1 of the group circuit.
+
+          - name: Group Circuit T2
+            description: Terminal 2 of the group circuit.  
+
+          - name: Group Circuit Position
+            description: Group circuit position.
+
+          - name: Group Circuit Type
+            description: Type of the group circuit i.e., 10g, vcs4s etc.
+
+          - name: LoadDateTime
+            description: Load Date and time of the data indicating the freshness of data.
+            tests:
+              - not_null    
+      
+  - name: stg_kat_sharedcableplant
+    columns:
+            - name: "[Share Cable Id]"
+              description: Unique identifier for a share cable transmission path. Primary key of the table. Value is a combination of Lmile Terminal, Mobile Terminal and cable number.
+              tests:
+                - unique
+                - not_null
+
+            - name: Share Cable Nr
+              description: Cable number of the shared cable plant.
+
+            - name: Last Mile Cable Junction
+              description: Last mile cable junction of the shared cable plant.
+
+            - name: Last Mile Junction Terminal
+              description: Last mile junction terminal of the shared cable plant.
+
+            - name: Mobile Terminal
+              description: Mobile terminal of shared cable plant.
+
+            - name: Root Terminal
+              description: Root terminal of shared cable plant.
+
+            - name: "[Cable Status]"
+              description: Cable status i.e., Active, Damaged etc.
+              tests:
+                  - accepted_values:
+                      values: ['Active','Damaged']
+
+            - name: Damage Mark
+              description: Marker indicating if the Cable is damaged or not.
+
+            - name: LoadDateTime
+              description: Load Date and time of the data indicating the freshness of data.
+              tests:
+                - not_null
+
+  - name: stg_kat_terminal
+    columns:
+          - name: "[Terminal Id]"
+            description: Unique identifier for a terminal. Can be a Mobile Terminal, Root Terminal, Group Circuit Terminal1, Group Circuit Terminal2. Primary key of the table.
+            tests:
+                  - unique
+                  - not_null
+            
+          - name: Navn
+            description: Name of the terminal. For mobile terminals, name is a combination of site id and site name which is used for correlating data from ramsite.
+
+          - name: Stednavn
+            description: Terminal1.
+
+          - name: Teknisk
+            description: Terminal2.
+
+          - name: Gade
+            description: Street of the terminal.
+
+          - name: Nr
+            description: House number of the terminal.
+
+          - name: Bogst
+            description: Bogst of the terminal.
+
+          - name: Etage
+            description: Etage of the terminal.
+
+          - name: Lejl
+            description: Lejl of the terminal.
+
+          - name: PostNr
+            description: Post code where the terminal is located.
+
+          - name: By
+            description: City where the terminal is located.
+
+          - name: Geocode
+            description: Geocode of the terminal.
+
+          - name: Dok Central
+            description: Dok central to which the terminal belongs to.
+
+          - name: Share Connection 1
+            description: Share Connection 1 of the terminal.
+
+          - name: Share Connection 2
+            description: Share Connection 2 of the terminal.
+
+          - name: Damage Mark
+            description: Damage marker of the terminal.
+
+          - name: LoadDateTime
+            description: Load Date and time of the data indicating the freshness of data.
+            tests:
+              - not_null
